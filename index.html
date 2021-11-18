@@ -1,69 +1,53 @@
 <!DOCTYPE html>
-<html lang='en'>
-
-<head>
-    <meta charset='UTF-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Coding Quiz</title>
-    <link rel='stylesheet' href='assets\style\style.css'>
-</head>
+    <link rel="stylesheet" href="assets\style\style.css" />
+  </head>
 
-<body>
+  <body>
     <!-- Quiz Scoreboard -->
     <nav class="scoreboard"><a href="highscore.html">View High Scores</a></nav>
 
-    <!-- Start Quiz! -->
-    <div>
-        <button class='start-btn'>Start Quiz!</button>
-    </div>
+    <div class="timer">Time Remaining: <span id="time"></span></div>
 
-    <!-- Quiz Box -->
-    <div class="quiz-box">
-        <header>
-            <div class="title">Coding Quiz!</div>
-            <div class="timer">
-                <div class="timer-text">Time Remaining:</div>
-                <div class="time">60</div>
-            </div>
-        </header>
-        <!-- Questions Section -->
-        <section>
-            <!-- Question -->
-            <div class="questions">
-                <!-- in JS -->
-            </div>
-            <!-- Question Options -->
-            <div class="options">
-                <!-- in JS -->
-            </div>
-        </section>
+    <main class="quiz-wrapper">
+      <!-- Start Quiz! -->
+      <div class="start-page">
+        <button class="start-btn">Start Quiz!</button>
+      </div>
 
-        <!-- Quiz footer -->
-        <footer>
-            <div class="total">
-                <!-- num count from JS -->
-            </div>
-            <button class="next">Next Question</button>
-        </footer>
-    </div>
+      <!-- Quiz Box -->
+      <!-- Questions Section -->
+      <div id="questions" >
+        <h2 id="question-title"></h2>
+        <div id="choices"></div>
+      </div>
+
+      <!-- Quiz footer -->
+      <footer>
+        <div class="total">
+          <!-- num count from JS -->
+        </div>
+        <button class="next">Next Question</button>
+      </footer>
+    </main>
 
     <!-- Results-->
-    <div id="results" class="hide">
-        <h2>Quiz Completed</h2>
-        <p>
-            Your final score is: <span id="final"></span>.
-        </p>
+    <div id="results">
+      <h2>Quiz Completed</h2>
+      <p>Your final score is: <span id="final"></span>.</p>
 
-        <!-- scoreboard -->
-        <p>
-            Enter Your initials: <input type="text" id="initials" max="3" />
-            <button id="submit">Submit</button>
-        </p>
+      <!-- scoreboard -->
+      <p>
+        Enter Your initials: <input type="text" id="initials" max="3" />
+        <button id="submit">Submit</button>
+      </p>
     </div>
 
     <!-- Javascript -->
     <script></script>
-
-</body>
-
+  </body>
 </html>
