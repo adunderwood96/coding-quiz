@@ -20,7 +20,7 @@
     <div class="page">
         <div class="start-content">
             <div class="start-prompt">
-                <h1>Master the Code Quiz</h1>
+                <h1>Code Master Quiz</h1>
                 <p>
                     The following quiz is based off some simple, beginner-friendly coding
                     questions <br />
@@ -33,14 +33,14 @@
         </div>
 
         <!-- Questions Box -->
-        <div class="quiz-page">
+        <div id="quiz-page">
             <div class="header">
                 <h2>The Coding Master</h2>
             </div>
-            <div class="questions">
+            <div id="questions" class="hide">
                 <!-- Questions/Answers are in JS file -->
             </div>
-            <div class="answers"></div>
+            <div id="answers" class="hide"></div>
             <!-- Let User Know if they got the Q. right/wrong -->
             <div class="result"></div>
             <button id="next" class="btn">Next Question</button>
@@ -50,7 +50,7 @@
             <h2>You have completed the trial, young one</h2>
             <p>Your final results reveal your future: <span id="final"></span></p>
             <p>
-                Enter Your Initials to the Ranks:<input type="text" id="initials" max="3" />
+                Enter Your Initials to the Ranks:<input type="text" name="initials" id="initials" placeholder="ABC" max="3"/>
             </p>
             <button id="retry" class="btn">Play Again</button>
             <button id="reset" class="btn">Reset Your Score</button>
