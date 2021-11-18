@@ -11,50 +11,51 @@
 <body>
     <!-- Quiz Scoreboard/Timer -->
     <header>
-        <div class="scoreboard">
-            <h3><a href="highscore.html">View High Scores</a></h3>
+        <div>
+            <h3 class="scoreboard"><a href="highscore.html">View High Scores</a></h3>
         </div>
         <div class="timer">Time Remaining: 60<span id="time"></span></div>
     </header>
 
-    <div class="start-content">
-        <div class="start-prompt">
-            <h1>Master the Code Quiz</h1>
+    <div class="page">
+        <div class="start-content">
+            <div class="start-prompt">
+                <h1>Master the Code Quiz</h1>
+                <p>
+                    The following quiz is based off some simple, beginner-friendly coding
+                    questions <br />
+                    and is timed. If a question is answered wrongly, the timer will
+                    decrease by 3 seconds. <br />
+                    Click Start to began Level One of the trial of the code master!
+                </p>
+                <button id="start-btn" class="btn">Start Quiz</button>
+            </div>
+        </div>
+
+        <!-- Questions Box -->
+        <div class="quiz-page">
+            <div class="header">
+                <h2>The Coding Master</h2>
+            </div>
+            <div class="questions">
+                <!-- Questions/Answers are in JS file -->
+            </div>
+            <div class="answers"></div>
+            <!-- Let User Know if they got the Q. right/wrong -->
+            <div class="result"></div>
+            <button id="next" class="btn">Next Question</button>
+        </div>
+
+        <div class="end-content">
+            <h2>You have completed the trial, young one</h2>
+            <p>Your final results reveal your future: <span id="final"></span></p>
             <p>
-                The following quiz is based off some simple, beginner-friendly coding
-                questions <br />
-                and is timed. If a question is answered wrongly, the timer will
-                decrease by 3 seconds. <br />
-                Click Start to began Level One of the trial of the code master!
+                Enter Your Initials to the Ranks:<input type="text" id="initials" max="3" />
             </p>
-            <button id="start-btn" class="btn">Start Quiz</button>
+            <button id="retry" class="btn">Play Again</button>
+            <button id="reset" class="btn">Reset Your Score</button>
         </div>
     </div>
-
-    <!-- Questions Box -->
-    <div class="quiz-page">
-        <div class="header">
-            <h2>The Coding Master</h2>
-        </div>
-        <div class="questions">
-            <!-- Questions/Answers are in JS file -->
-        </div>
-        <div class="answers"></div>
-        <!-- Let User Know if they got the Q. right/wrong -->
-        <div class="result"></div>
-        <button id="next" class="btn">Next Question</button>
-    </div>
-
-    <div class="end-content">
-        <h2>You have completed the trial, young one</h2>
-        <p>Your final results reveal your future: <span id="final"></span></p>
-        <p>
-            Enter Your Initials to the Ranks:<input type="text" id="initials" max="3" />
-        </p>
-        <button id="retry" class="btn">Play Again</button>
-        <button id="reset" class="btn">Reset Your Score</button>
-    </div>
-
     <!-- Javascript -->
     <script>
         src = ".assets/js/script.js";
