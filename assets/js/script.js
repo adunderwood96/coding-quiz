@@ -1,19 +1,20 @@
 // Variables
 
 // Timer
-const timeE1 = document.querySelector('#time')
-const timeLeft = 60;
-const timer;
+var timeE1 = document.querySelector('#time')
+var timeLeft = 60;
+var timer;
 
 // Start Quiz
-const startBtn = document.querySelector('#start');
-const startPrompt = document.querySelector('#start-prompt');
+var startBtn = document.querySelector('#start');
+var startPrompt = document.querySelector('#start-prompt');
 
 // Q & A
-const questions = document.querySelector('#questions');
-const answers = document.querySelector('#answers');
+var questions = document.querySelector('#questions');
+var answers = document.querySelector('#answers');
 
 // User Score
 
 // HighScore
 
+// Start Quiz

@@ -5,45 +5,48 @@
 
 :root {
   --primary: rgb(87, 85, 194);
-  --secondary: rgb(80, 39, 134);
-  --tertiary: rgb(233, 215, 218);
+  --secondary: rgb(63, 24, 114);
   --white: rgb(255, 255, 255);
+  --pink: rgb(216, 165, 212);
 }
 
 body {
   background-image: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
   background-size: fill;
-  color: var(--secondary);
   margin: 0 auto;
   padding-bottom: 25px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   text-align: center;
 }
 
+p {
+  font-weight: 600;
+}
 
 .page {
   background-color: var(--white);
   border: 1px solid black;
+  border-radius: 20px;
   margin: 100px auto 0 auto;
   max-width: 600px;
   padding: 20px;
 }
 
 .btn {
-  font-size: 15px;
-  font-weight: 300;
-  color: var(--primary);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--white);
   padding: 20px 20px;
   margin: 15px;
   border: none;
   border-radius: 10px;
-  background: #e2d1c3;
+  background: var(--secondary);
   transition: background-color 0.1s;
   cursor: pointer;
 }
 
 .btn:hover {
-  background-color: var(--tertiary);
+  background-color: var(--primary);
 }
 
 /* Header Style*/
@@ -58,7 +61,6 @@ header {
 header h3 {
   font-size: 1rem;
   display: inline;
-  color: var(--secondary);
 }
 
 .timer {
@@ -83,6 +85,6 @@ header h3 {
   }
 
 input[type=text]:focus {
-  background-color: var(--tertiary);
+  background-color: var(--pink);
   width: 50%;
 }
