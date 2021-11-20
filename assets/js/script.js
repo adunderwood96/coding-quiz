@@ -5,7 +5,7 @@ var timeE1 = document.querySelector('#time')
 var timeLeft = 60;
 var timer;
 
-// Start Quiz
+// Start Quiz/Start PG
 var startBtn = document.querySelector('#start');
 var startPrompt = document.querySelector('#start-prompt');
 

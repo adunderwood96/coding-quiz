@@ -56,4 +56,16 @@ let questions = [
             "myfunction =()",
         ]
     },
+
+    {
+        numb: 6,
+        question: "What is the largest HTML element for headings?",
+        answer: "<h1>",
+        options: [
+            "<heading>",
+            "<h6>",
+            "<h1>",
+            "<head>",
+        ]
+    }
 ];
