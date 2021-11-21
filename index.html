@@ -14,7 +14,7 @@
         <div>
             <h3 class="scoreboard"><a href="highscore.html">View High Scores</a></h3>
         </div>
-        <div class="timer">Time Remaining: 60<span id="time"></span></div>
+        <div class="timer">Time Remaining: <span id="time"></span></div>
     </header>
 
     <div class="page">
@@ -42,14 +42,16 @@
 
         <div id="end-content" style='display: none'>
             <h2>You have completed the trial, young Padawan</h2>
-            <h3>Results: <span id="result-final"></span></h3>
+            <div id="final-result">
+                <h3>Results:</h3>
+            </div>
             <div id="input-initials">
                 <h3> Enter Your Initials into the Ranks: </h3>
                 <p>
                     <input type="text" name="initials" id="initials" placeholder="ABC" max="3" />
                     <button id="submit" class="btn">Submit Score</button>
                 </p>
-            </div>          
+            </div>
             <button id="retry" class="btn">Play Again</button>
             <button id="reset" class="btn">Reset Your Score</button>
         </div>
@@ -57,10 +59,6 @@
     <!-- Javascript -->
     <script>
         src = ".assets/js/script.js";
-    </script>
-    <!-- Questions -->
-    <script>
-        src = ".assets/js/questions.js";
     </script>
 </body>
 

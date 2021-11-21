@@ -1,32 +1,26 @@
 // Quiz Variables
 
 // Timer
-var timeEl = document.querySelector('#time');
-var timeLeft = 60;
+var timeEl = document.querySelector('time');
+var timeLeft = 90;
 var timerId;
 
 // Start Page
-var startBtn = document.querySelector('#start-btn');
-var startPrompt = document.querySelector('#start-content');
+var startPrompt = document.querySelector('start-content');
+var startBtn = document.querySelector('start-btn');
 
 // Question, answers, and results Block
-var questionContainer = document.querySelector('#quiz-page');
-var questions = document.querySelector('#questions');
-var answerDiv = document.querySelector('#answers');
-var resultDiv = document.querySelector('#result');
+var quizPage = document.querySelector('quiz-page');
+var questions = document.querySelector('questions');
+var answerDiv = document.querySelector('answers');
+var resultDiv = document.querySelector('result');
 
 // User end score result 
-var scoreContainer = document.querySelector('#end-content');
-var scoreDiv = document.querySelector('#final-result');
-var recordScore = document.querySelector('#submit');
-var initialsDiv = document.querySelector('#input-initials');
-var initials = document.querySelector("#initials");
-
-// High score Page
-var highScoreDiv = document.querySelector('#high-score');
-var hScoreContainer = document.querySelector('#hscore-container');
-var rePlay = document.querySelector('#play-again');
-var clearScore = document.querySelector('#clear');
+var endResults = document.querySelector('end-content');
+var resultDiv = document.querySelector('final-result');
+var initialsDiv = document.querySelector('input-initials');
+var initials = document.querySelector("initials");
+var submitScore = document.querySelector('submit');
 
 // Questions/Answers Array
 var questions = [
@@ -147,28 +141,27 @@ var questions = [
     },
 ];
 
-// Show num of questions
 var questionIndex = 0;
 
 // event handlers
 startBtn.addEventListener('click', handleStartClick);
 answerDiv.addEventListener('click', handleAnswerClick);
-recordScore.addEventListener('click', handleSubmitClick);
+submitScore.addEventListener('click', handleSubmitClick);
 rePlay.addEventListener('click', handleReplayClick);
 clearScore.addEventListener('click', handleClearClick);
 
 
 // Functions
-function handleStartClick() {
-    // Hide start prompt
+function handleStartClick(e) {
+    // Hide start screen 
     startPrompt.style.display = 'none';
 
-    // Start counter count down; use setInterval to determine what happens each second
+    // Start counter count down
     timerId = setInterval(countDown, 1000);
 
     // Show questions and answers 
-    questionContainer.style.display = 'block';
-    
+    quizPage.style.display = 'block';
+
     startQuiz();
 };
 
@@ -186,3 +179,74 @@ function countDown() {
     timeLeft--;
 };
 
+function startQuiz() {
+    var currentQuestion = questions[questionIndex];
+
+    questions.textContent = currentQuestion.text;
+
+    answerDiv.innerHTML = '';
+
+    clearResults();
+
+    for (let i = 0; i < currentQuestion.answers.length; i++) {
+        // Create a variable to store the answer text
+        var answer = currentQuestion.answers[i];
+        // Create a button for each answer
+        var btn = document.createElement('button');
+        // Set the button class='btn btn-primary btn-color'
+        btn.setAttribute('class', 'btn');
+        // Set the button text to the answers text
+        btn.textContent = answer;
+        // Append the button to the answers div
+        answerDiv.appendChild(btn);
+    };
+};
+
+function handleAnswerClick(e) {
+    e.preventDefault();
+    if (!e.target.matches('button')) return;
+
+    // Did the user chose the correct answer?
+    // Store the user's answer
+    var userAnswer = e.target.textContent;
+
+    // Retrieve current question
+    var question = questions[questionIndex];
+
+    // Get correct answer
+    var correctAnswer = question.answers[question.correctIndex];
+
+    // Compare correct answer to user's response
+    if (userAnswer === correctAnswer) {
+        displayCorrect();
+    }
+    else {
+        // If incorrect, indicate, remove 10 seconds from time, move to next question.
+        timeLeft -= 10;
+        displayIncorrect();
+    }
+    questionIndex++
+
+    if (questionIndex === questions.length) {
+        clearTimeout(timeTick);
+        return displayScore();
+    }
+
+    setTimeout(startQuiz, 1000);
+};
+
+function displayCorrect() {
+    // display correct answer div
+    resultDiv.style.display = 'block';
+    resultDiv.textContent = 'Correct!';
+};
+
+function displayIncorrect() {
+    // set attributes for incorrect answers
+    resultDiv.style.display = 'block';
+    resultDiv.textContent = 'Incorrect!';
+};
+
+function clearResults() {
+    resultDiv.style.display = 'none';
+}
