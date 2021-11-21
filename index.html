@@ -19,37 +19,37 @@
 
     <div class="page">
         <div id="start-content">
-            <div id="start-prompt">
-                <h1>Code Master Quiz</h1>
-                <p>
-                    The following quiz is based off some simple, beginner-friendly coding
-                    questions and is timed. If a question is answered wrongly,
-                    the timer will decrease by 3 seconds. <br />
-                    Click Start to began Level One of the trial to become a code master!
-                </p>
-                <button id="start-btn" class="btn">Start Quiz</button>
-            </div>
+            <h1>Code Master Quiz</h1>
+            <p>
+                The following quiz is based off some simple, beginner-friendly coding
+                questions and is timed. If a question is answered wrongly,
+                the timer will decrease by 3 seconds. <br />
+                Click Start to began Level One of the trial to become a code master!
+            </p>
+            <button id="start-btn" class="btn">Start Quiz</button>
         </div>
 
         <!-- Questions Box -->
-        <div id="quiz-page">
-            <div id="questions" class="hide">
+        <div id="quiz-page" style='display: none'>
+            <div id="questions">
                 <!-- Questions/Answers are in JS file -->
             </div>
-            <div id="answers" class="hide"></div>
+            <div id="answers"></div>
             <!-- Let User Know if they got the Q. right/wrong -->
             <div class="result"></div>
             <button id="next" class="btn">Next Question</button>
         </div>
 
-        <div id="end-content">
+        <div id="end-content" style='display: none'>
             <h2>You have completed the trial, young Padawan</h2>
-            <h3>Results: <span id="final"></span></h3>
-            <h3> Enter Your Initials into the Ranks: </h3>
-            <p>
-                <input type="text" name="initials" id="initials" placeholder="ABC" max="3" />
-                <button id="submit" class="btn">Submit Score</button>
-            </p>
+            <h3>Results: <span id="result-final"></span></h3>
+            <div id="input-initials">
+                <h3> Enter Your Initials into the Ranks: </h3>
+                <p>
+                    <input type="text" name="initials" id="initials" placeholder="ABC" max="3" />
+                    <button id="submit" class="btn">Submit Score</button>
+                </p>
+            </div>          
             <button id="retry" class="btn">Play Again</button>
             <button id="reset" class="btn">Reset Your Score</button>
         </div>
