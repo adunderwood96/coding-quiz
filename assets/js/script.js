@@ -236,17 +236,55 @@ function handleAnswerClick(e) {
 };
 
 function displayCorrect() {
-    // display correct answer div
+    // correct answers
     resultDiv.style.display = 'block';
     resultDiv.textContent = 'Correct!';
 };
 
 function displayIncorrect() {
-    // set attributes for incorrect answers
+    // incorrect answers
     resultDiv.style.display = 'block';
     resultDiv.textContent = 'Incorrect!';
 };
 
 function clearResults() {
     resultDiv.style.display = 'none';
-}
+};
+
+function displayScore() {
+    // Hide quiz
+    quizPage.style.display = 'none';
+    timeEl.style.display = 'none';
+
+    // Show results 
+    endResults.style.display = 'block';
+
+    // Set the text content for the HTML element that displays the score
+    if (timeLeft < 0) {
+        scoreDiv.textContent = 'Your score is 0'
+    }
+    else {
+        scoreDiv.textContent = `Your score is ${timeLeft}`;
+    }
+
+};
+
+function handleSubmitClick(e) {
+    e.preventDefault();
+    // Allow user to record score
+    var user = {
+        initials: initials.value.trim(),
+        score: timeLeft,
+    };
+
+    var scores = JSON.parse(localStorage.getItem('highscores')) || [];
+    scores.push(user);
+
+    //local storage 
+    localStorage.setItem('highscores', JSON.stringify(scores));
+
+    renderHighScore(user);
+
+
+};
+
