@@ -7,7 +7,7 @@ const startBtn = document.querySelector('#start');
 const startPage = document.querySelector('#start-page');
 
 // Question & answers block
-const questionsEl = document.querySelector('#questions');
+const quizBox = document.querySelector('#quiz-box');
 const questionText = document.querySelector('#question-text');
 const choicesEl = document.querySelector('#choices');
 const resultEl = document.querySelector('#result')
@@ -28,7 +28,7 @@ const questions = [
             "Hyper Text Multiple Language",
             "Hyper Tool Multi Language",
         ],
-        answer: "Hyper Text Markup Language"
+        answerIndex: 2,
 
     },
 
@@ -40,7 +40,7 @@ const questions = [
             "Computer Style Sheet",
             "Cascading Style Sheet",
         ],
-        answer: "Cascading Style Sheet"
+        answerIndex: 4,
 
     },
 
@@ -52,7 +52,7 @@ const questions = [
             "Booleans",
             "indexNumberers",
         ],
-        answer: "alerts"
+        answerIndex: 2,
     },
 
     {
@@ -63,7 +63,7 @@ const questions = [
             "text",
             "image",
         ],
-        answer: "alt"
+        answerIndex: 2,
     },
 
     {
@@ -74,7 +74,7 @@ const questions = [
             "function:myFunction()",
             "myfunction =()",
         ],
-        answer: "function myFunction()"
+        answerIndex: 1,
     },
 
     {
@@ -85,7 +85,7 @@ const questions = [
             "<h1>",
             "<head>",
         ],
-        answer: "<h1>"
+        answerIndex: 3,
     },
 
     {
@@ -96,7 +96,7 @@ const questions = [
             "<lb>",
             "<line>",
         ],
-        answer: "<br>"
+        answerIndex: 1,
     },
 
     {
@@ -107,18 +107,18 @@ const questions = [
             "!comment",
             "// comment",
         ],
-        answer: "// comment"
+        answerIndex: 4,
     },
 
     {
-        text: "What is the largest HTML element for headings?",
+        text: "What is the smallest HTML element for headings?",
         choices: [
             "<heading>",
             "<h6>",
             "<h1>",
             "<head>",
         ],
-        answer: "<h1>"
+        answerIndex: 2,
     },
 
     {
@@ -129,7 +129,7 @@ const questions = [
             "id",
             "*id",
         ],
-        answer: "id"
+        answerIndex: 3,
     },
 ];
 
@@ -141,7 +141,7 @@ choicesEl.addEventListener('click', choicesClick);
 submitScore.addEventListener('click', submitClick);
 clearScore.addEventListener('click', clearClick);
 
-function startClick(e) {
+function startClick() {
     // Hide start page
     startPage.style.display = 'none';
 
@@ -149,7 +149,7 @@ function startClick(e) {
     timerId = setInterval(countDown, 1000);
 
     // Show questions and answers 
-    questionsEl.style.display = 'block';
+    quizBox.style.display = 'block';
 
     startQuiz();
 };
@@ -179,7 +179,7 @@ function startQuiz() {
     clearResults();
 
     for (let i = 0; i < currentQuestion.choices.length; i++) {
-        // Create a variable to store the answer text
+        // store the answer text
         const answer = currentQuestion.choices[i];
         // Create a button for each answer
         const btn = document.createElement('button');
@@ -187,13 +187,13 @@ function startQuiz() {
         btn.setAttribute('class', 'btn');
         // Set the button text to the answers text
         btn.textContent = answer;
-        // Append the button to the answers div
+        // Append the button to choices
         choicesEl.appendChild(btn);
     };
 };
 
-function choicesClick(e) {
-    e.preventDefault();
+function choicesClick() {
+    e.answerpreventDefault();
     if (!e.target.matches('button')) return;
 
     // Did the user chose the correct answer?
@@ -204,10 +204,10 @@ function choicesClick(e) {
     const question = questions[questionIndex];
 
     // Get correct answer
-    const correctAnswer = question.choices[question.answer];
+    const correct = question.choices[question.answerIndex];
 
     // Compare correct answer to user's response
-    if (userAnswer === correctAnswer) {
+    if (userAnswer === correct) {
         displayCorrect();
     }
     else {
@@ -243,7 +243,7 @@ function clearResults() {
 
 function displayScore() {    
     // Hide everything
-    questions.style.display = 'none';
+    quizBox.style.display = 'none';
     timeEl.style.display = 'none';
 
     // Show score block
@@ -263,13 +263,13 @@ function displayScore() {
 function submitClick(e) {
   e.preventDefault();
   // Allow user to record score
-    var user = {
+    const user = {
         initials: initials.value.trim(),
         score: timeLeft,
     };
 
     
-    var scores = JSON.parse(localStorage.getItem('highscores')) || [];
+    const scores = JSON.parse(localStorage.getItem('highscores')) || [];
     scores.push(user);
 
     // Create user on local storage 
@@ -291,7 +291,7 @@ function submitClick(e) {
     // Display user's initial and score
     highscoreEl.textContent = user.initials + ': ' + user.score;
     
-      var highScoreList = localStorage.getItem('highscores');
+      const highScoreList = localStorage.getItem('highscores');
       highScoreList = JSON.parse(highScoreList);
 
       };

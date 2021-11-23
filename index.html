@@ -24,21 +24,21 @@
       <h1>Code Master Quiz</h1>
       <p>
         The following quiz is based off some simple, beginner-friendly coding
-        questions and is timed. If a question is answered wrongly, the timer
-        will decrease. <br />
+        questions and is timed. If a question is answered wrongly, the user is penalized by the timer
+        decreasing 10 seconds. <br />
         Click Start to began Level One of the trial to become a code master!
       </p>
       <button id="start" class="btn">Start Quiz</button>
     </div>
 
     <!-- Questions Box -->
-    <div id="questions" style="display: none">
-      <div id="question-title">
-        <!-- Questions/Answers are in JS file -->
-      </div>
-      <div id="answers" class="answers"></div>
-      <div id='result' class='result' style="display: none;"></div>
+    <div id="quiz-box">
+      <!-- Questions/Answers are in JS file -->
+      <div id="question-text"></div>
 
+      <div id="choices" class="choices"></div>
+
+      <div id='result' class='result' style="display: none;"></div>
     </div>
 
     <div id="end-page" style="display: none">
@@ -57,7 +57,7 @@
   </div>
 
   <!-- Javascript -->
-  <script src="assets/js/script.js";></script>
+  <script src="assets/js/script.js" ;></script>
 
 </body>
 
