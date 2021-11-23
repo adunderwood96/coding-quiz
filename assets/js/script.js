@@ -1,171 +1,304 @@
-// Quiz variables
+const timeEl = document.querySelector('#time');
+let timeLeft = 90;
+let timerId;
 
-// Timer
-var questionIndex = 0;
-var time = questions.length * 15;
-var timerId;
+// Start block
+const startBtn = document.querySelector('#start');
+const startPage = document.querySelector('#start-page');
 
-var questionsEl = document.getElementById('questions');
-var timeEl = document.getElementById('time');
-var answersEl = document.getElementById('answers');
-var submitBtn = document.getElementById('submit');
-var startBtn = document.getElementById('start');
-var initialsEl = document.getElementById('input-initials');
-var resultsEl = document.getElementById('result');
+// Question & answers block
+const questionsEl = document.querySelector('#questions');
+const questionText = document.querySelector('#question-text');
+const choicesEl = document.querySelector('#choices');
+const resultEl = document.querySelector('#result')
 
+// User score block
+const scoreBox = document.querySelector('#end-page');
+const scoreEl = document.querySelector('#score');
+const submitScore = document.querySelector('#submit');
+const inputEl = document.querySelector('#input');
+const initials = document.querySelector("#initials");
 
-function startQuiz() {
-    // Hide Start Page
-    var startPage = document.getElementById('start-content');
-    startPage.setAttribute('class', 'start hide');
+const questions = [
+    {
+        text: "What does HTML stand for?",
+        choices: [
+            "Hyper Text Preprocessor",
+            "Hyper Text Markup Language",
+            "Hyper Text Multiple Language",
+            "Hyper Tool Multi Language",
+        ],
+        answer: "Hyper Text Markup Language"
 
-    // show questions section
-    questionsEl.setAttribute("class", " ");
-    // start timer
-    timerId = setInterval(function () {
-        countDown();
-    }, 1000);
-    // show starting time
-    timerEl.textContent = time;
+    },
 
-    getQuestion();
-};
+    {
+        text: "What does CSS stand for?",
+        choices: [
+            "Common Style Sheet",
+            "Colorful Style Sheet",
+            "Computer Style Sheet",
+            "Cascading Style Sheet",
+        ],
+        answer: "Cascading Style Sheet"
 
-function getQuestion() {
-    // get current question  from array
-    var currentQuestion = questions[questionIndex];
-    // update title with current question
-    questionsEl.children[0].textContent = currentQuestion.title;
-    // clear out any old question answers
-    while (answersEl.hasChildNodes()) {
-        answersEl.removeChild(answersEl.lastChild);
-    }
-    // loop answers
-    for (var i = 0; i < currentQuestion.answers.length; i++) {
+    },
 
-        // create new button for each choice
-        var choicesButton = document.createElement("button");
-        choicesButton.textContent = currentQuestion.answers[i];
+    {
+        text: "What is NOT included in data types?",
+        choices: [
+            "Strings",
+            "Alerts",
+            "Booleans",
+            "indexNumberers",
+        ],
+        answer: "alerts"
+    },
 
-        // display on the page
-        answersEl.appendChild(choicesButton);
-    }
-    // attach click event listener to each choice
-    answersEl.children[0].addEventListener("click", function (event) {
-        questionClick(answersEl.children[0]);
-    });
-    answersEl.children[1].addEventListener("click", function (event) {
-        questionClick(answersEl.children[1]);
-    });
-    answersEl.children[2].addEventListener("click", function (event) {
-        questionClick(answersEl.children[2]);
-    });
-    answersEl.children[3].addEventListener("click", function (event) {
-        questionClick(answersEl.children[3]);
-    });
-};
+    {
+        text: "Which of the following is the HTML attribute used when an image does not appear?",
+        choices: [
+            "src",
+            "alt",
+            "text",
+            "image",
+        ],
+        answer: "alt"
+    },
 
-function questionClick(answerChoice) {
-    // check answer
-    if (answerChoice.textContent != questions[questionIndex].answer) {
-        // penalize time if incorrect :(
-        time -= 10;
-        // display new time on page
-        resultsEl.textContent = "Incorrect";
+    {
+        text: "How do you write a function in JavaScript?",
+        choices: [
+            "function myFunction()",
+            "function = myFunction()",
+            "function:myFunction()",
+            "myfunction =()",
+        ],
+        answer: "function myFunction()"
+    },
 
-    }
-    else {
-        resultsEl.textContent = "Correct!";
-    }
+    {
+        text: "What is the largest HTML element for headings?",
+        choices: [
+            "<heading>",
+            "<h6>",
+            "<h1>",
+            "<head>",
+        ],
+        answer: "<h1>"
+    },
 
-    // show user if choice is correct/incorrect
-    resultsEl.setAttribute("class", "result");
-    setInterval(function () {
-        resultsEl.setAttribute("class", "result hide");
-    }, 700);
+    {
+        text: "What is the correct way to add a line break into HTML?",
+        choices: [
+            "<br>",
+            "<break>",
+            "<lb>",
+            "<line>",
+        ],
+        answer: "<br>"
+    },
 
-    // next question 
-    currentQuestionIndex++;
+    {
+        text: "What is the proper way to add a comment in JS?",
+        choices: [
+            "--!comment--",
+            "'comment'",
+            "!comment",
+            "// comment",
+        ],
+        answer: "// comment"
+    },
 
-    // number of Q end
-    if (currentQuestionIndex === questions.length)
-        // endQuiz
-        endQuiz();
-    // else 
-    else
-        // getQuestion
-        getQuestion();
-};
+    {
+        text: "What is the largest HTML element for headings?",
+        choices: [
+            "<heading>",
+            "<h6>",
+            "<h1>",
+            "<head>",
+        ],
+        answer: "<h1>"
+    },
 
-function endQuiz() {
-    // stop timer
-    clearInterval(timerId);
-    timerEl.textContent = time;
+    {
+        text: "In CSS how do you select an id element?",
+        choices: [
+            ".id",
+            "!id",
+            "id",
+            "*id",
+        ],
+        answer: "id"
+    },
+];
 
-    // Show Results
-    var endResults = document.getElementById('end-content');
-    endResults.setAttribute("class", " ");
+let questionIndex = 0;
 
-    var scoreEl = document.getElementById('final-result');
-    scoreEl.textContent = time;
+// Event Listeners 
+startBtn.addEventListener('click', startClick);
+choicesEl.addEventListener('click', choicesClick);
+submitScore.addEventListener('click', submitClick);
+clearScore.addEventListener('click', clearClick);
 
-    // hide questions section
-    questionsEl.setAttribute("class", "hide");
+function startClick(e) {
+    // Hide start page
+    startPage.style.display = 'none';
+
+    // Start countdown
+    timerId = setInterval(countDown, 1000);
+
+    // Show questions and answers 
+    questionsEl.style.display = 'block';
+
+    startQuiz();
 };
 
 function countDown() {
-    // update time
-    time--;
-    timerEl.textContent = time;
+    // Start Countdown timer for quiz
+    timeEl.innerHTML = `Time Remaining: ${timeLeft}`;
 
-    // check if user ran out of time
-    if (time <= 0)
-        endQuiz();
+    // If timer reaches 0 end quiz
+    if (timeLeft < 1) {
+        clearTimeout(timerId);
 
+        // Display Score
+        displayScore();
+    }
+    timeLeft--;
 };
 
-function saveHighscore() {
-    // get value of input box
-    var initials = initialsEl.value.toUpperCase();
-    // make sure value wasn't empty
-    if (initials === "") {
-        alert("Please enter initials'");
-        return;
-    }
-    else if (initials.length > 3) {
-        alert("Initials length must not be longer than 3 characters");
-        return;
-    }
-    else {
-        // get saved scores from localstorage, or if not any, set to empty array
-        var highscores;
-        if (JSON.parse(localStorage.getItem("highscores")) != null)
-            highscores = JSON.parse(window.localStorage.getItem("highscores"));
-        else
-            highscores = [];
-        // format new score object for current user
-        var newScore = {
-            initials: initials,
-            score: time
-        };
-        highscores.push(newScore);
-        // save to localstorage
-        localStorage.setItem("highscores", JSON.stringify(highscores));
-        // redirect to next page
-        location.href = "highscore.html";
+function startQuiz() {
+    const currentQuestion = questions[questionIndex];
+
+    questionText.textContent = currentQuestion.text;
+
+    choicesEl.innerHTML = '';
+
+    //clear prev results
+    clearResults();
+
+    for (let i = 0; i < currentQuestion.choices.length; i++) {
+        // Create a variable to store the answer text
+        const answer = currentQuestion.choices[i];
+        // Create a button for each answer
+        const btn = document.createElement('button');
+
+        btn.setAttribute('class', 'btn');
+        // Set the button text to the answers text
+        btn.textContent = answer;
+        // Append the button to the answers div
+        choicesEl.appendChild(btn);
     };
 };
 
-function checkForEnter(event) {
-    // check if event key is enter
-    // saveHighscore
-    if (event.keyCode === 13)
-        saveHighscore();
+function choicesClick(e) {
+    e.preventDefault();
+    if (!e.target.matches('button')) return;
+
+    // Did the user chose the correct answer?
+    // Store the user's answer
+    const userAnswer = e.target.textContent;
+
+    // Retrieve current question
+    const question = questions[questionIndex];
+
+    // Get correct answer
+    const correctAnswer = question.choices[question.answer];
+
+    // Compare correct answer to user's response
+    if (userAnswer === correctAnswer) {
+        displayCorrect();
+    }
+    else {
+        // If incorrect penalize user by 10 seconds from time, and move to next question.
+        timeLeft -= 10;
+        displayIncorrect();
+    }
+    questionIndex++
+
+    if (questionIndex === questions.length) {
+        clearTimeout(timerId);
+        return displayScore();
+    }
+
+    setTimeout(startQuiz, 1000);
 };
 
-submitBtn.onclick = saveHighscore;
+function displayCorrect() {
+    // display correct answer div
+    resultEl.style.display = 'block';
+    resultEl.textContent = 'Correct!';
+};
 
-// user clicks button to start quiz
-startBtn.onclick = startQuiz;
+function displayIncorrect() {
+    // set attributes for incorrect answers
+    resultEl.style.display = 'block';
+    resultEl.textContent = 'Incorrect!';
+};
 
-initialsEl.onkeyup = checkForEnter;
+function clearResults() {
+    resultEl.style.display = 'none';
+}
+
+function displayScore() {    
+    // Hide everything
+    questions.style.display = 'none';
+    timeEl.style.display = 'none';
+
+    // Show score block
+    scoreBox.style.display = 'block';
+
+    // Set the text content for the HTML element that displays the score
+    if (timeLeft < 0) {
+        scoreEl.textContent = 'Your score is 0'
+    }
+    else {
+    scoreEl.textContent = `Your score is ${timeLeft}`;
+    }
+    
+
+};
+
+function submitClick(e) {
+  e.preventDefault();
+  // Allow user to record score
+    var user = {
+        initials: initials.value.trim(),
+        score: timeLeft,
+    };
+
+    
+    var scores = JSON.parse(localStorage.getItem('highscores')) || [];
+    scores.push(user);
+
+    // Create user on local storage 
+    localStorage.setItem('highscores', JSON.stringify(scores));
+
+    renderHighScore(user);
+    
+    // Save initials and score to localStorage
+
+  };
+
+  function renderHighScore(user) {
+    // Hide score section
+    scoreBox.style.display = 'none';
+  
+    // Show high score block
+    hscoreBox.style.display = 'block';
+    
+    // Display user's initial and score
+    highscoreEl.textContent = user.initials + ': ' + user.score;
+    
+      var highScoreList = localStorage.getItem('highscores');
+      highScoreList = JSON.parse(highScoreList);
+
+      };
+  
+
+  
+      function clearClick() {
+          // Clear score
+          highscoreEl.textContent = '';
+      }
