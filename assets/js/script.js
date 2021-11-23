@@ -5,7 +5,7 @@ var questionIndex = 0;
 var time = questions.length * 15;
 var timerId;
 
-var questionsEl = document.getElementById('quiz-page');
+var questionsEl = document.getElementById('questions');
 var timeEl = document.getElementById('time');
 var answersEl = document.getElementById('answers');
 var submitBtn = document.getElementById('submit');
@@ -15,11 +15,9 @@ var resultsEl = document.getElementById('result');
 
 
 function startQuiz() {
+    // Hide Start Page
     var startPage = document.getElementById('start-content');
-
-    // Hide start screen
-    startPage.setAttribute('class', 'start hide')
-    var currentQuestion = questions[questionIndex];
+    startPage.setAttribute('class', 'start hide');
 
     // show questions section
     questionsEl.setAttribute("class", " ");
@@ -42,7 +40,7 @@ function getQuestion() {
     while (answersEl.hasChildNodes()) {
         answersEl.removeChild(answersEl.lastChild);
     }
-    // loop over answers
+    // loop answers
     for (var i = 0; i < currentQuestion.answers.length; i++) {
 
         // create new button for each choice
@@ -70,7 +68,7 @@ function getQuestion() {
 function questionClick(answerChoice) {
     // check answer
     if (answerChoice.textContent != questions[questionIndex].answer) {
-        // penalize time :(
+        // penalize time if incorrect :(
         time -= 10;
         // display new time on page
         resultsEl.textContent = "Incorrect";
