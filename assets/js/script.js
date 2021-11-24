@@ -1,5 +1,5 @@
 var timeEl = document.querySelector('#time');
-var timeLeft = 90;
+var timeLeft = 60;
 var timerId;
 
 // Start block
@@ -16,39 +16,38 @@ var resultEl = document.querySelector('#result')
 var scoreBox = document.querySelector('#end-page');
 var scoreEl = document.querySelector('#score');
 var submitScore = document.querySelector('#submit');
-var inputEl = document.querySelector('#input');
-var initials = document.querySelector("#initials");
+var inputEl = document.querySelector('#user-input');
 
 var questions = [
     {
         text: "What does HTML stand for?",
         choices: ["Hyper Text Preprocessor", "Hyper Text Markup Language", "Hyper Text Multiple Language", "Hyper Tool Multi Language"],
-        answerIndex: "Hyper Text Markup Language"
+        correctAnswer: "Hyper Text Markup Language",
     },
 
     {
         text: "What does CSS stand for?",
         choices: ["Common Style Sheet", "Colorful Style Sheet", "Computer Style Sheet", "Cascading Style Sheet"],
-        answerIndex: "Cascading Style Sheet"
+        correctAnswer: "Cascading Style Sheet",
 
     },
 
     {
         text: "What is NOT included in data types?",
         choices: ["Strings", "Alerts", "Booleans", "Numbers"],
-        answerIndex: "Numbers"
+        correctAnswer: "Numbers",
     },
 
     {
         text: "Which of the following is the HTML attribute used when an image does not appear?",
         choices: ["src", "alt", "text", "image"],
-        answerIndex: "alt"
+        correctAnswer: "alt",
     },
 
     {
         text: "How do you write a function in JavaScript?",
         choices: ["function myFunction()", "function = myFunction()", "function:myFunction()", "myfunction =()"],
-        answerIndex: "function myFunction()"
+        correctAnswer: "function myFunction()",
     },
 
 ];
@@ -114,13 +113,13 @@ choicesEl.addEventListener('click', function choicesClick(e) {
 
     var userAnswer = e.target.textContent;
 
-    // Retrieve current question
+    //  current question
     var question = questions[questionIndex];
 
-    // Get correct answer
-    var correct = question.choices[question.answerIndex];
+    //  correct answer
+    var correct = question.choices[question.correctAnswer];
 
-    // Compare correct answer to user's response
+    //user response
     if (userAnswer === correct) {
         displayCorrect();
     }
@@ -160,7 +159,7 @@ function displayScore() {
     quizBox.style.display = 'none';
     timeEl.style.display = 'none';
 
-    // Show score block
+    // Show score 
     scoreBox.style.display = 'block';
 
     // Set the text content for the HTML element that displays the score
@@ -171,5 +170,32 @@ function displayScore() {
         scoreEl.textContent = `Your score is ${timeLeft}`;
     }
 
-
 };
+
+submitScore.addEventListener('click', function saveScore(e) {
+    e.preventDefault();
+    // get value of input box
+    var initials = inputEl.value.trim();
+
+      // get saved scores from localstorage, or if not any, set to empty 
+      var highscores;
+      if(JSON.parse(localStorage.getItem("highscores")) != null)
+        highscores = JSON.parse(window.localStorage.getItem("highscores"));
+      else
+        highscores = [];
+
+      // format new score object for current user
+      var newScore = {
+        initials: initials,
+        score: timeLeft
+      };
+      highscores.push(newScore);
+      // save to localstorage
+      localStorage.setItem("highscores", JSON.stringify(highscores));
+      // redirect to next page
+      location.href = "highscore.html";
+}
+)
+
+
+inputEl.onkeyup = checkForEnter;
