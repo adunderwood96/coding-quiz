@@ -1,55 +1,54 @@
-var timeEl = document.querySelector('#time');
+var timeEl = document.getElementById('time');
 var timeLeft = 60;
 var timerId;
 
 // Start block
-var startBtn = document.querySelector('#start');
-var startPage = document.querySelector('#start-page');
+var startBtn = document.getElementById('start');
+var startPage = document.getElementById('start-page');
 
 // Question & answers block
-var quizBox = document.querySelector('#quiz-box');
-var questionText = document.querySelector('#question-text');
-var choicesEl = document.querySelector('#choices');
-var resultEl = document.querySelector('#result')
+var quizBox = document.getElementById('quiz-box');
+var questionText = document.getElementById('question-text');
+var choicesEl = document.getElementById('choices');
+var resultEl = document.getElementById('result')
 
 // User score block
-var scoreBox = document.querySelector('#end-page');
-var scoreEl = document.querySelector('#score');
-var submitScore = document.querySelector('#submit');
-var inputEl = document.querySelector('#user-input');
+var scoreBox = document.getElementById('end-page');
+var scoreEl = document.getElementById('score');
+var submitScore = document.getElementById('submit');
+var inputEl = document.getElementById('user-input');
 
 var quizQuestions = [
     {
         text: "What does HTML stand for?",
         choices: ["Hyper Text Preprocessor", "Hyper Text Markup Language", "Hyper Text Multiple Language", "Hyper Tool Multi Language"],
-        correctAnswer: "Hyper Text Markup Language",
+        correctAnswer: "Hyper Text Markup Language"
     },
 
     {
         text: "What does CSS stand for?",
         choices: ["Common Style Sheet", "Colorful Style Sheet", "Computer Style Sheet", "Cascading Style Sheet"],
-        correctAnswer: "Cascading Style Sheet",
+        correctAnswer: "Cascading Style Sheet"
 
     },
 
     {
         text: "What is NOT included in data types?",
         choices: ["Strings", "Alerts", "Booleans", "Numbers"],
-        correctAnswer: "Numbers",
+        correctAnswer: "Numbers"
     },
 
     {
         text: "Which of the following is the HTML attribute used when an image does not appear?",
         choices: ["src", "alt", "text", "image"],
-        correctAnswer: "alt",
+        correctAnswer: "alt"
     },
 
     {
         text: "How do you write a function in JavaScript?",
         choices: ["function myFunction()", "function = myFunction()", "function:myFunction()", "myfunction =()"],
-        correctAnswer: "function myFunction()",
-    },
-
+        correctAnswer: "function myFunction()"
+    }
 ];
 
 var questionIndex = 0;
@@ -84,18 +83,18 @@ function countDown() {
 };
 
 function startQuiz() {
-    var current = quizQuestions[questionIndex];
+    var currentQuestion = quizQuestions[questionIndex];
 
-    questionText.textContent = current.text;
+    questionText.textContent = currentQuestion.text;
 
     choicesEl.innerHTML = '';
 
     //clear prev results
     clearResults();
-   
-    for (var i = 0; i < current.choices.length; i++) {
+
+    for (var i = 0; i < currentQuestion.choices.length; i++) {
         // store the answer text
-        var answer = current.choices[i];
+        var answer = currentQuestion.choices[i];
         // Create a button for each answer
         var btn = document.createElement('button');
 
@@ -152,7 +151,7 @@ function displayIncorrect() {
 
 function clearResults() {
     resultEl.style.display = 'none';
-}
+};
 
 function displayScore() {
     // Hide everything
@@ -176,33 +175,33 @@ submitScore.addEventListener('click', function handleSaveHighscore(e) {
     e.preventDefault();
     // get value of input box
     var initials = inputEl.value.trim();
-if (initials ===""){
-alert('Input cannot be blank!')
-return '';
-}
-else if (initials.length > 3){
-    alert('Initials length must be no longer than 3 characters')
-    return '';
-}
-      // get saved scores from localstorage, or if not any, set to empty 
-      var highscores;
-      if(JSON.parse(localStorage.getItem("highscores")) != null)
+    if (initials === "") {
+        alert('Input cannot be blank!')
+        return '';
+    }
+    else if (initials.length > 3) {
+        alert('Initials length must be no longer than 3 characters')
+        return '';
+    }
+    // get saved scores from localstorage
+    var highscores;
+    if (JSON.parse(localStorage.getItem("highscores")) != null)
         highscores = JSON.parse(window.localStorage.getItem("highscores"));
-      else
+    else
         highscores = [];
 
-      // format new score object for current user
-      var newScore = {
+    // format new score object for current user
+    var newScore = {
         initials: initials,
-        score: timeLeft
-      };
-      highscores.push(newScore);
-      // save to localstorage
-      localStorage.setItem("highscores", JSON.stringify(highscores));
-      // redirect to next page
-      location.href = "highscores.html";
+        highscore: timeLeft
+    };
+    highscores.push(newScore);
+    // save to localstorage
+    localStorage.setItem("highscores", JSON.stringify(highscores));
+    // redirect to next page
+    location.href = "highscores.html";
 
-      handleSaveHighscore();
-})
+    handleSaveHighscore();
+});
 
 
