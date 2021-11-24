@@ -56,7 +56,7 @@ var questionIndex = 0;
 
 // Start Quiz
 
-startBtn.addEventListener('click', function startClick(e) {
+startBtn.addEventListener('click', function handleStartClick(e) {
     // Hide start page
     startPage.style.display = 'none';
 
@@ -107,7 +107,7 @@ function startQuiz() {
     };
 };
 
-choicesEl.addEventListener('click', function choicesClick(e) {
+choicesEl.addEventListener('click', function handleChoicesClick(e) {
     e.preventDefault();
     if (!e.target.matches('button')) return;
 
@@ -172,11 +172,17 @@ function displayScore() {
 
 };
 
-submitScore.addEventListener('click', function saveScore(e) {
+submitScore.addEventListener('click', function handleSaveScore(e) {
     e.preventDefault();
     // get value of input box
     var initials = inputEl.value.trim();
-
+if (initials ===""){
+alert('Input cannot be blank!')
+}
+else if (initials.length > 3){
+    alert('Initials length must be no longer than 3 characters')
+    return '';
+}
       // get saved scores from localstorage, or if not any, set to empty 
       var highscores;
       if(JSON.parse(localStorage.getItem("highscores")) != null)
@@ -193,9 +199,6 @@ submitScore.addEventListener('click', function saveScore(e) {
       // save to localstorage
       localStorage.setItem("highscores", JSON.stringify(highscores));
       // redirect to next page
-      location.href = "highscore.html";
+      location.href = "highscores.html";
 }
 )
-
-
-inputEl.onkeyup = checkForEnter;
