@@ -1,16 +1,16 @@
 function printHighscores() {
 
-    var highScores = JSON.parse(localStorage.getItem("highscores"));
-    if(highScores != null){
+    var highscores = JSON.parse(localStorage.getItem("highscores"));
+    if(highscores != null){
 
-      highScores.sort(function(a, b) {
+      highscores.sort(function(a, b) {
         return parseInt(b.score) - parseInt(a.score);
       });
       // for each score
-      for(var i = 0; i < highScores.length; i++){
+      for(var i = 0; i < highscores.length; i++){
         // create li tag for score
         var scoreLi = document.createElement("li");
-        scoreLi.textContent = highScores[i].initials + " - " + highScores[i].score;
+        scoreLi.textContent = highscores[i].initials + " - " + highScores[i].score;
         // display on page
         document.querySelector("#highscores").appendChild(scoreLi);
       }

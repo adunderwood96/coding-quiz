@@ -18,7 +18,7 @@ var scoreEl = document.querySelector('#score');
 var submitScore = document.querySelector('#submit');
 var inputEl = document.querySelector('#user-input');
 
-var questions = [
+var quizQuestions = [
     {
         text: "What does HTML stand for?",
         choices: ["Hyper Text Preprocessor", "Hyper Text Markup Language", "Hyper Text Multiple Language", "Hyper Tool Multi Language"],
@@ -84,18 +84,18 @@ function countDown() {
 };
 
 function startQuiz() {
-    var currentQuestion = questions[questionIndex];
+    var current = quizQuestions[questionIndex];
 
-    questionText.textContent = currentQuestion.text;
+    questionText.textContent = current.text;
 
     choicesEl.innerHTML = '';
 
     //clear prev results
     clearResults();
-
-    for (var i = 0; i < currentQuestion.choices.length; i++) {
+   
+    for (var i = 0; i < current.choices.length; i++) {
         // store the answer text
-        var answer = currentQuestion.choices[i];
+        var answer = current.choices[i];
         // Create a button for each answer
         var btn = document.createElement('button');
 
@@ -114,7 +114,7 @@ choicesEl.addEventListener('click', function handleChoicesClick(e) {
     var userAnswer = e.target.textContent;
 
     //  current question
-    var question = questions[questionIndex];
+    var question = quizQuestions[questionIndex];
 
     //  correct answer
     var correct = question.choices[question.correctAnswer];
@@ -130,7 +130,7 @@ choicesEl.addEventListener('click', function handleChoicesClick(e) {
     }
     questionIndex++
 
-    if (questionIndex === questions.length) {
+    if (questionIndex === quizQuestions.length) {
         clearTimeout(timerId);
         return displayScore();
     }
@@ -172,12 +172,13 @@ function displayScore() {
 
 };
 
-submitScore.addEventListener('click', function handleSaveScore(e) {
+submitScore.addEventListener('click', function handleSaveHighscore(e) {
     e.preventDefault();
     // get value of input box
     var initials = inputEl.value.trim();
 if (initials ===""){
 alert('Input cannot be blank!')
+return '';
 }
 else if (initials.length > 3){
     alert('Initials length must be no longer than 3 characters')
@@ -200,5 +201,8 @@ else if (initials.length > 3){
       localStorage.setItem("highscores", JSON.stringify(highscores));
       // redirect to next page
       location.href = "highscores.html";
-}
-)
+
+      handleSaveHighscore();
+})
+
+
