@@ -1,53 +1,56 @@
-var timeEl = document.getElementById('time');
+// Quiz Variables
+
+// Time 
+var timeEl = document.querySelector('#time');
 var timeLeft = 60;
 var timerId;
 
-// Start block
-var startBtn = document.getElementById('start');
-var startPage = document.getElementById('start-page');
+// Start section
+var startBtn = document.querySelector('#start');
+var startPage = document.querySelector('#start-page');
 
-// Question & answers block
-var quizBox = document.getElementById('quiz-box');
-var questionText = document.getElementById('question-text');
-var choicesEl = document.getElementById('choices');
-var resultEl = document.getElementById('result')
+// Question & answers 
+var quizBox = document.querySelector('#quiz-box');
+var questionText = document.querySelector('#question-text');
+var choicesEl = document.querySelector('#choices');
+var resultEl = document.querySelector('#result')
 
-// User score block
-var scoreBox = document.getElementById('end-page');
-var scoreEl = document.getElementById('score');
-var submitScore = document.getElementById('submit');
-var inputEl = document.getElementById('user-input');
+// User score input
+var scoreBox = document.querySelector('#end-page');
+var scoreEl = document.querySelector('#score');
+var submitScore = document.querySelector('#submit');
+var inputEl = document.querySelector('#user-input');
 
-var quizQuestions = [
+var questions = [
     {
         text: "What does HTML stand for?",
-        choices: ["Hyper Text Preprocessor", "Hyper Text Markup Language", "Hyper Text Multiple Language", "Hyper Tool Multi Language"],
-        correctAnswer: "Hyper Text Markup Language"
+        choices: ["Hypertext Preprocessor", "Hypertext Markup Language", "Hypertext Multiple Language", "Hypertool Multi Language"],
+        answers: 1
     },
 
     {
         text: "What does CSS stand for?",
-        choices: ["Common Style Sheet", "Colorful Style Sheet", "Computer Style Sheet", "Cascading Style Sheet"],
-        correctAnswer: "Cascading Style Sheet"
+        choices: ["Common Style Sheet", "Colorful Style Sheet", "Cascading Style Sheet", "Computer Style Sheet"],
+        answers: 2
 
     },
 
     {
         text: "What is NOT included in data types?",
         choices: ["Strings", "Alerts", "Booleans", "Numbers"],
-        correctAnswer: "Numbers"
+        answers: 3
     },
 
     {
         text: "Which of the following is the HTML attribute used when an image does not appear?",
         choices: ["src", "alt", "text", "image"],
-        correctAnswer: "alt"
+        answers: 1
     },
 
     {
         text: "How do you write a function in JavaScript?",
         choices: ["function myFunction()", "function = myFunction()", "function:myFunction()", "myfunction =()"],
-        correctAnswer: "function myFunction()"
+        answers: 0
     }
 ];
 
@@ -83,7 +86,7 @@ function countDown() {
 };
 
 function startQuiz() {
-    var currentQuestion = quizQuestions[questionIndex];
+    var currentQuestion = questions[questionIndex];
 
     questionText.textContent = currentQuestion.text;
 
@@ -93,43 +96,43 @@ function startQuiz() {
     clearResults();
 
     for (var i = 0; i < currentQuestion.choices.length; i++) {
-        // store the answer text
-        var answer = currentQuestion.choices[i];
-        // Create a button for each answer
-        var btn = document.createElement('button');
+        var choiceBtn = document.createElement('button');
 
-        btn.setAttribute('class', 'btn');
-        // Set the button text to the answers text
-        btn.textContent = answer;
-        // Append the button to choices
-        choicesEl.appendChild(btn);
+        choiceBtn.setAttribute('class', 'btn');
+        choiceBtn.textContent = currentQuestion.choices[i];
+        choicesEl.appendChild(choiceBtn);
     };
 };
 
 choicesEl.addEventListener('click', function handleChoicesClick(e) {
     e.preventDefault();
-    if (!e.target.matches('button')) return;
+    if (!e.target.matches('button'))
+    return;
 
     var userAnswer = e.target.textContent;
 
     //  current question
-    var question = quizQuestions[questionIndex];
+    var question = questions[questionIndex];
 
     //  correct answer
-    var correct = question.choices[question.correctAnswer];
+    var correct = question.choices[question.answers];
 
     //user response
     if (userAnswer === correct) {
-        displayCorrect();
+        timeLeft += 3;
+        resultEl.style.display ="block";
+        resultEl.textContent ="Correct!";
     }
     else {
         // If incorrect penalize user by 10 seconds from time, and move to next question.
         timeLeft -= 10;
-        displayIncorrect();
+        resultEl.style.display ="block";
+        resultEl.textContent = "Incorrect";
     }
+
     questionIndex++
 
-    if (questionIndex === quizQuestions.length) {
+    if (questionIndex === questions.length) {
         clearTimeout(timerId);
         return displayScore();
     }
@@ -137,31 +140,19 @@ choicesEl.addEventListener('click', function handleChoicesClick(e) {
     setTimeout(startQuiz, 1000);
 });
 
-function displayCorrect() {
-    // display correct answer div
-    resultEl.style.display = 'block';
-    resultEl.textContent = 'Correct!';
-};
-
-function displayIncorrect() {
-    // set attributes for incorrect answers
-    resultEl.style.display = 'block';
-    resultEl.textContent = 'Incorrect!';
-};
 
 function clearResults() {
     resultEl.style.display = 'none';
 };
 
 function displayScore() {
-    // Hide everything
+    // Hide quiz, reveal results
     quizBox.style.display = 'none';
     timeEl.style.display = 'none';
 
     // Show score 
     scoreBox.style.display = 'block';
 
-    // Set the text content for the HTML element that displays the score
     if (timeLeft < 0) {
         scoreEl.textContent = 'Your score is 0'
     }
@@ -180,7 +171,7 @@ submitScore.addEventListener('click', function handleSaveHighscore(e) {
         return '';
     }
     else if (initials.length > 3) {
-        alert('Initials length must be no longer than 3 characters')
+        alert('Initials must be no longer than 3 characters in length!')
         return '';
     }
     // get saved scores from localstorage
@@ -191,11 +182,11 @@ submitScore.addEventListener('click', function handleSaveHighscore(e) {
         highscores = [];
 
     // format new score object for current user
-    var newScore = {
+    var score = {
         initials: initials,
         highscore: timeLeft
     };
-    highscores.push(newScore);
+    highscores.push(score);
     // save to localstorage
     localStorage.setItem("highscores", JSON.stringify(highscores));
     // redirect to next page
